@@ -1,4 +1,14 @@
 Rails.application.routes.draw do
+  get 'events/create'
+
+  get 'agents/create'
+
+  get 'agents/index'
+
+  get 'agents/create'
+
+  get 'agents/index'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
