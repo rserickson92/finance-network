@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   root 'agents#index'
-  post 'agent', to: "agents#create"
+  post 'agent', to: 'agents#create'
+  post 'agents', to: 'agents#create_many'
   resources :events, only: [:create]
-  resources :agents, only: [:create]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
