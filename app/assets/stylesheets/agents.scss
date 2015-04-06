@@ -2,6 +2,21 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+$circle-border: #7F7B7F;
+$circle-fill: #3F3D40;
+$line-color: #BEB8BF;
+
 text.label {
 	display: none;
+}
+
+circle {
+	stroke: $circle-border;
+	stroke-width: 3;
+	fill: $circle-fill;
+}
+
+line {
+	stroke-width: 5;
+	stroke: $line-color;
 }

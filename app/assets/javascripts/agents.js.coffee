@@ -74,8 +74,6 @@ $ ->
 		  .append("g")
 		  .attr("class", "event")
 		event_groups.append("line")
-		  .attr "stroke-width", 5
-		  .attr "stroke", "gray" 
 			.attr "x1", x1
 			.attr "y1", y1
 			.attr "x2", x2
