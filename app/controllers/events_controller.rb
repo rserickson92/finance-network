@@ -3,6 +3,7 @@ class EventsController < ApplicationController
 
   def create
   	Event.store(event_params)
+  	redirect_to root_path
   end
 
   private

@@ -3,12 +3,14 @@ class AgentsController < ApplicationController
 
   def create
   	Agent.store(agent_params)
+    redirect_to root_path
   end
 
   def create_many
   	agents_params[:agents].each do |agent|
   	  Agent.store(agent)
   	end
+    redirect_to root_path
   end
 
   def index
