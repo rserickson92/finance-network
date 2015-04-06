@@ -16,6 +16,9 @@ $ ->
 		  l = s.length
 		  "$#{s.slice(0, l - 2)}.#{s.slice(l - 2, l)}"
 		agentToId = (agent) -> agent.name.replace(/ /g, '')
+		bindLabelDisplayEvent = (selector) ->
+			$(selector).mouseenter () -> $(@).find("text").show()
+			$(selector).mouseleave () -> $(@).find("text").hide()
     
     #create svg canvas
 		svg = d3.select("body").append("svg")
@@ -51,8 +54,7 @@ $ ->
 			.attr("y", yPos)
 
 		#add display of agent name and worth only when mousing over
-		$("g.agent").mouseenter () -> $(@).find("text").show()
-		$("g.agent").mouseleave () -> $(@).find("text").hide()
+		bindLabelDisplayEvent("g.agent")
 
 		#visualize events as lines
 		events = data['events']
@@ -83,8 +85,9 @@ $ ->
 		  .text((event) -> "amount: #{formatWorth(event.amount)}")
 		  .attr "x", (event) -> (parseFloat(x1(event)) + parseFloat(x2(event))) / 2
 		  .attr "y", (event) -> (parseFloat(y1(event)) + parseFloat(y2(event))) / 2
-		$("g.event").mouseenter () -> $(@).find("text").show()
-		$("g.event").mouseleave () -> $(@).find("text").hide()
+
+		#add display of event info only when mousing over
+		bindLabelDisplayEvent("g.event")
 	#end visualize
 
 	$.ajax
