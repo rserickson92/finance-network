@@ -14,6 +14,8 @@ class AgentsController < ApplicationController
   end
 
   def index
+    @events = Event.load_all
+    @agents = Agent.load_all
   end
 
   private
