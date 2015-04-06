@@ -3,6 +3,8 @@
 This application runs on Rails. I chose Rails simply because it is the framework I am most comfortable
 with.
 
+repo: github.com/rserickson92
+
 # Installing Ruby on Rails
 
 Setting up a Rails environment (and dev environments in general) can be painful. This section hopes
