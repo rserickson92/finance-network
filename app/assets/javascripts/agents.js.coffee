@@ -15,19 +15,17 @@ $ ->
 		  s = worth.toString()
 		  l = s.length
 		  "$#{s.slice(0, l - 2)}.#{s.slice(l - 2, l)}"
-		agentToId = (agent) -> btoa(agent.name)
-		idToAgent = (agent) -> atob(agent.name)
+		agentToId = (agent) -> agent.name.replace(/ /g, '')
     
     #create svg canvas
 		svg = d3.select("body").append("svg")
 			.attr("width", outerWidth)
 			.attr("height", outerHeight)
-			.append("g")
+		  .append("g")
 			.attr("transform", "translate(#{margin.left},#{margin.top})")
 
 		#visualize agents as circles
 		agents = data['agents']
-		events = data['events']
 		xScale = d3.scale.linear()
 			.domain([0, agents.length]).nice()
 			.range([0, w])
@@ -57,16 +55,38 @@ $ ->
 		$("g.agent").mouseleave () -> $(@).find("text").hide()
 
 		#visualize events as lines
+		events = data['events']
+		x1 = (event) ->
+			fromAgent = $("##{event.from.replace(/ /g, '')}")
+			fromAgent.find("circle").attr("cx")
+		y1 = (event) ->
+			fromAgent = $("##{event.from.replace(/ /g, '')}")
+			fromAgent.find("circle").attr("cy")
+		x2 = (event) ->
+			toAgent = $("##{event.to.replace(/ /g, '')}")
+			toAgent.find("circle").attr("cx")
+		y2 = (event) ->
+			toAgent = $("##{event.to.replace(/ /g, '')}")
+			toAgent.find("circle").attr("cy")
 		event_groups = svg.selectAll("g.event")
 		  .data(events)
 		  .enter()
 		  .append("g")
 		  .attr("class", "event")
 		event_groups.append("line")
-		  .attr("x1", 0)
-		  .attr("y1", 0)
-		  .attr("x2", 0)
-		  .attr("y2", 0)
+		  .attr "stroke-width", 5
+		  .attr "stroke", "gray" 
+			.attr "x1", x1
+			.attr "y1", y1
+			.attr "x2", x2
+			.attr "y2", y2
+		event_groups.append("text")
+		  .attr("class", "label")
+		  .text((event) -> "amount: #{formatWorth(event.amount)}")
+		  .attr "x", (event) -> (parseFloat(x1(event)) + parseFloat(x2(event))) / 2
+		  .attr "y", (event) -> (parseFloat(y1(event)) + parseFloat(y2(event))) / 2
+		$("g.event").mouseenter () -> $(@).find("text").show()
+		$("g.event").mouseleave () -> $(@).find("text").hide()
 	#end visualize
 
 	$.ajax
