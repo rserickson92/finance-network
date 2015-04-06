@@ -8,8 +8,7 @@ class Agent < ActiveRecord::Base
   	agent_records = Agent.all
   	agents = []
   	agent_records.each do |ar|
-  		agent = {name: ar.name, agentType: ar.agentType, worth: ar.worth.to_s}
-  		agent[:worth].insert -3, '.'
+  		agent = {name: ar.name, agentType: ar.agentType, worth: ar.worth}
   		agents.append agent
   	end
   	agents

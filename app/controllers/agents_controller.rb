@@ -14,8 +14,12 @@ class AgentsController < ApplicationController
   end
 
   def index
-    @events = Event.load_all
-    @agents = Agent.load_all
+  end
+
+  def load
+    events = Event.load_all
+    agents = Agent.load_all
+    render json: {events: events, agents: agents}
   end
 
   private

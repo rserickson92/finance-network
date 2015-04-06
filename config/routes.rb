@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root 'agents#index'
+  get 'agents', to: 'agents#load'
   post 'agent', to: 'agents#create'
   post 'agents', to: 'agents#create_many'
   post 'event', to: 'events#create'
