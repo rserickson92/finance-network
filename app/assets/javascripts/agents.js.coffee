@@ -4,7 +4,7 @@ $ ->
 		margin = {top: 20, right: 20, bottom: 20, left: 60}
 		padding = {top: 60, right: 60, bottom: 60, left: 60}
 		outerWidth = 2000
-		outerHeight = 500
+		outerHeight = 600
 		innerWidth = outerWidth - margin.left - margin.right
 		innerHeight = outerHeight - margin.top - margin.bottom
 		w = innerWidth - padding.left - padding.right
@@ -46,15 +46,7 @@ $ ->
 		agent_groups.append("circle")
 			.attr("cx", xPos)
 			.attr("cy", yPos)
-			.attr("r", 8)
-		agent_groups.append("text")
-			.attr("class", "label")
-			.text((agent) -> "#{agent.name}: #{formatWorth(agent.worth)}")
-			.attr("x", xPos)
-			.attr("y", yPos)
-
-		#add display of agent name and worth only when mousing over
-		bindLabelDisplayEvent("g.agent")
+			.attr("r", 10)
 
 		#visualize events as lines
 		events = data['events']
@@ -80,13 +72,21 @@ $ ->
 			.attr "y1", y1
 			.attr "x2", x2
 			.attr "y2", y2
+
+    #add text last so it is visible
+		agent_groups.append("text")
+			.attr("class", "label")
+			.text((agent) -> "#{agent.name}: #{formatWorth(agent.worth)}")
+			.attr("x", xPos)
+			.attr("y", (agent, i) -> yPos(agent, i) - 10)
 		event_groups.append("text")
 		  .attr("class", "label")
 		  .text((event) -> "amount: #{formatWorth(event.amount)}")
 		  .attr "x", (event) -> (parseFloat(x1(event)) + parseFloat(x2(event))) / 2
 		  .attr "y", (event) -> (parseFloat(y1(event)) + parseFloat(y2(event))) / 2
 
-		#add display of event info only when mousing over
+		#add display of info only when mousing over
+		bindLabelDisplayEvent("g.agent")
 		bindLabelDisplayEvent("g.event")
 	#end visualize
 
