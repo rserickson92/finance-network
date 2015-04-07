@@ -19,12 +19,18 @@ And that should hopefully be it!
 
 #Running
 
-Once the project is unzipped, go to the root directory of the project. Run "rails server". Assuming
-all goes well, open a browser (I recommend Chrome, this is what I developed with) and navigate
-to localhost:3000. You should see a blank page. From here, the page will be populated whenever
-you submit POST requests to the endpoints. Unfortunately this is not in real-time.
+Note: Steps 2 and 3 should only be necessary once.
+1. Go to the root directory of the project
+2. Run "bundle install", this will install dependencies.
+3. Run "rake db:migrate" to prepare the database tables.
+4. Run "rails server"
+5. Open a browser (I recommend Chrome, this is what I developed with) and navigate
+to localhost:3000. 
+You should see a blank page. From here, the page will be populated whenever
+you submit POST requests to the endpoints. Unfortunately this is not in real-time... yet.
 
 # Data Models
-I store the JSON data sent to the API endpoints in Rails's default SQLite database. The fields
-are almost exactly the same, with some type conversions for convenience (e.g. I store the floats
+I store the JSON data sent to the API endpoints in Rails's default SQLite database in an Agent table
+and an Event table. The fields
+are almost exactly the same. I did some type conversions for convenience (e.g. I store the floats
 as ints).
