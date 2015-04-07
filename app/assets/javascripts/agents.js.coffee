@@ -3,7 +3,7 @@ $ ->
 		#'global' variables for controlling canvas size
 		margin = {top: 20, right: 20, bottom: 20, left: 60}
 		padding = {top: 60, right: 60, bottom: 60, left: 60}
-		outerWidth = 2000
+		outerWidth = 1500
 		outerHeight = 600
 		innerWidth = outerWidth - margin.left - margin.right
 		innerHeight = outerHeight - margin.top - margin.bottom
@@ -21,10 +21,11 @@ $ ->
 			$(selector).mouseleave () -> $(@).find("text").hide()
     
     #create svg canvas
-		svg = d3.select("body").append("svg")
+		svg = d3.select("#vis-container").append("svg")
 			.attr("width", outerWidth)
 			.attr("height", outerHeight)
 		  .append("g")
+		  .attr("id", "vis")
 			.attr("transform", "translate(#{margin.left},#{margin.top})")
 
 		#visualize agents as circles
@@ -73,18 +74,21 @@ $ ->
 			.attr "x2", x2
 			.attr "y2", y2
 
+		#hack to put circles in front of lines
+		removed_agents = $("g.agent").remove()
+		$("#vis").append(removed_agents)
+
     #add text last so it is visible
 		agent_groups.append("text")
 			.attr("class", "label")
 			.text((agent) -> "#{agent.name}: #{formatWorth(agent.worth)}")
-			.attr("x", xPos)
-			.attr("y", (agent, i) -> yPos(agent, i) - 10)
+			.attr "x", w / 2
+			.attr "y", h / 2
 		event_groups.append("text")
 		  .attr("class", "label")
 		  .text((event) -> "amount: #{formatWorth(event.amount)}")
-		  .attr "x", (event) -> (parseFloat(x1(event)) + parseFloat(x2(event))) / 2
-		  .attr "y", (event) -> (parseFloat(y1(event)) + parseFloat(y2(event))) / 2
-
+		  .attr "x", w / 2
+		  .attr "y", h / 2 
 		#add display of info only when mousing over
 		bindLabelDisplayEvent("g.agent")
 		bindLabelDisplayEvent("g.event")

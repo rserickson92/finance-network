@@ -8,6 +8,7 @@ $line-color: #BEB8BF;
 
 text.label {
 	display: none;
+	font-family: sans-serif;
 }
 
 circle {
@@ -19,4 +20,10 @@ circle {
 line {
 	stroke-width: 5;
 	stroke: $line-color;
+}
+
+.vis {
+	height: 600px;
+	width: 2000px;
+	overflow: scroll;
 }
