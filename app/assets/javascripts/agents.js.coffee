@@ -1,25 +1,49 @@
 $ ->
-	visualize = (data) ->
-		#'global' variables for controlling canvas size
-		margin = {top: 20, right: 20, bottom: 20, left: 60}
-		padding = {top: 60, right: 60, bottom: 60, left: 60}
-		outerWidth = 1500
-		outerHeight = 600
-		innerWidth = outerWidth - margin.left - margin.right
-		innerHeight = outerHeight - margin.top - margin.bottom
-		w = innerWidth - padding.left - padding.right
-		h = innerHeight - padding.top - padding.bottom
+	#'global' variables for controlling canvas size
+	margin = {top: 20, right: 20, bottom: 20, left: 60}
+	padding = {top: 60, right: 60, bottom: 60, left: 60}
+	outerWidth = 1500
+	outerHeight = 600
+	innerWidth = outerWidth - margin.left - margin.right
+	innerHeight = outerHeight - margin.top - margin.bottom
+	w = innerWidth - padding.left - padding.right
+	h = innerHeight - padding.top - padding.bottom
 
-    #utility functions
-		formatWorth = (worth) ->
-		  s = worth.toString()
-		  l = s.length
-		  "$#{s.slice(0, l - 2)}.#{s.slice(l - 2, l)}"
-		agentToId = (agent) -> agent.name.replace(/ /g, '')
-		bindLabelDisplayEvent = (selector) ->
-			$(selector).mouseenter () -> $(@).find("text").show()
-			$(selector).mouseleave () -> $(@).find("text").hide()
-    
+	#utility functions for visualize()
+	formatWorth = (worth) ->
+		s = worth.toString()
+		l = s.length
+		"$#{s.slice(0, l - 2)}.#{s.slice(l - 2, l)}"
+	agentToId = (agent) -> agent.name.replace(/ /g, '')
+	bindLabelDisplayEvent = (selector) ->
+		$(selector).mouseenter () -> $(@).find("text").show()
+		$(selector).mouseleave () -> $(@).find("text").hide()
+	x1 = (event) ->
+		fromAgent = $("##{event.from.replace(/ /g, '')}")
+		fromAgent.find("circle").attr("cx")
+	y1 = (event) ->
+		fromAgent = $("##{event.from.replace(/ /g, '')}")
+		fromAgent.find("circle").attr("cy")
+	x2 = (event) ->
+		toAgent = $("##{event.to.replace(/ /g, '')}")
+		toAgent.find("circle").attr("cx")
+	y2 = (event) ->
+		toAgent = $("##{event.to.replace(/ /g, '')}")
+		toAgent.find("circle").attr("cy")
+
+	visualize = (data) ->
+		agents = data['agents']
+		events = data['events']
+		xScale = d3.scale.linear()
+			.domain([0, agents.length]).nice()
+			.range([0, w])
+		yScale = d3.scale.log()
+			.domain([1, d3.max(agents, (agent) -> agent.worth)]).nice()
+			.range([h, 0])
+		xPos = (agent, i) -> xScale(i)
+		yPos = (agent, i) ->
+		  if agent.worth < 1 then 1 else yScale(agent.worth)
+
     #create svg canvas
 		svg = d3.select("#vis-container").append("svg")
 			.attr("width", outerWidth)
@@ -29,15 +53,6 @@ $ ->
 			.attr("transform", "translate(#{margin.left},#{margin.top})")
 
 		#visualize agents as circles
-		agents = data['agents']
-		xScale = d3.scale.linear()
-			.domain([0, agents.length]).nice()
-			.range([0, w])
-		yScale = d3.scale.linear()
-			.domain([0, d3.max(agents, (agent) -> agent.worth)]).nice()
-			.range([h, 0])
-		xPos = (agent, i) -> xScale(i)
-		yPos = (agent, i) -> yScale(agent.worth)
 		agent_groups = svg.selectAll("g.agent")
 			.data(agents)
 			.enter()
@@ -50,19 +65,6 @@ $ ->
 			.attr("r", 10)
 
 		#visualize events as lines
-		events = data['events']
-		x1 = (event) ->
-			fromAgent = $("##{event.from.replace(/ /g, '')}")
-			fromAgent.find("circle").attr("cx")
-		y1 = (event) ->
-			fromAgent = $("##{event.from.replace(/ /g, '')}")
-			fromAgent.find("circle").attr("cy")
-		x2 = (event) ->
-			toAgent = $("##{event.to.replace(/ /g, '')}")
-			toAgent.find("circle").attr("cx")
-		y2 = (event) ->
-			toAgent = $("##{event.to.replace(/ /g, '')}")
-			toAgent.find("circle").attr("cy")
 		event_groups = svg.selectAll("g.event")
 		  .data(events)
 		  .enter()
