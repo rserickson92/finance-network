@@ -81,16 +81,17 @@ $ ->
 		$("#vis").append(removed_agents)
 
     #add text last so it is visible
+		agent_groups = svg.selectAll("g.agent")
 		agent_groups.append("text")
 			.attr("class", "label")
 			.text((agent) -> "#{agent.name}: #{formatWorth(agent.worth)}")
-			.attr "x", w / 2
-			.attr "y", h / 2
+			.attr("x", xPos)
+			.attr("y", (agent, i) -> yPos(agent, i) - 10)
 		event_groups.append("text")
-		  .attr("class", "label")
-		  .text((event) -> "amount: #{formatWorth(event.amount)}")
-		  .attr "x", w / 2
-		  .attr "y", h / 2 
+			.attr("class", "label")
+			.text((event) -> "#{formatWorth(event.amount)}: #{event.eventType}")
+			.attr "x", (event) -> (parseFloat(x1(event)) + parseFloat(x2(event))) / 2
+			.attr "y", (event) -> (parseFloat(y1(event)) + parseFloat(y2(event))) / 2
 		#add display of info only when mousing over
 		bindLabelDisplayEvent("g.agent")
 		bindLabelDisplayEvent("g.event")
@@ -100,3 +101,7 @@ $ ->
 		url: '/agents'
 		method: 'GET'
 		success: visualize
+	toggleOn = true
+	$("#toggle").on 'click', ->
+		if toggleOn then $("g").trigger("mouseenter") else $("g").trigger("mouseleave")
+		toggleOn = !toggleOn
