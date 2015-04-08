@@ -27,6 +27,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'slim-rails'
 gem 'responders'
 gem 'd3_rails', '~> 3.5.5'
+gem 'pg'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -48,3 +49,7 @@ group :development, :test do
   gem 'spring'
 end
 
+#for Heroku deployment
+group :production do
+  gem 'rails_12factor'
+end
