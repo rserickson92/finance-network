@@ -97,11 +97,18 @@ $ ->
 		bindLabelDisplayEvent("g.event")
 	#end visualize
 
+  #get data for visualization
 	$.ajax
 		url: '/agents'
 		method: 'GET'
 		success: visualize
-	toggleOn = true
-	$("#toggle").on 'click', ->
-		if toggleOn then $("g").trigger("mouseenter") else $("g").trigger("mouseleave")
-		toggleOn = !toggleOn
+
+	#button logic
+	eventsOn = true
+	agentsOn = true
+	$("#toggle-events").on 'click', ->
+		if eventsOn then $("g.event").trigger("mouseenter") else $("g.event").trigger("mouseleave")
+		eventsOn = !eventsOn
+	$('#toggle-agents').on 'click', ->
+		if agentsOn then $("g.agent").trigger("mouseenter") else $("g.agent").trigger("mouseleave")
+		agentsOn = !agentsOn
