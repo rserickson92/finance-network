@@ -112,3 +112,5 @@ $ ->
 	$('#toggle-agents').on 'click', ->
 		if agentsOn then $("g.agent").trigger("mouseenter") else $("g.agent").trigger("mouseleave")
 		agentsOn = !agentsOn
+	toggle_shadow = -> $(@).toggleClass("button-shadow")
+	$('button').hover toggle_shadow, toggle_shadow
