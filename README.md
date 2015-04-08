@@ -34,3 +34,16 @@ I store the JSON data sent to the API endpoints in Rails's default SQLite databa
 and an Event table. The fields
 are almost exactly the same. I did some type conversions for convenience (e.g. I store the floats
 as ints).
+
+# Uh-oh, I broke the app!
+Note: The only validation the app does at this time is enforcing unique agent names. It is not
+bulletproof.
+
+Here are some things you can do:
+
+1. Try emptying the database. You can do this by running the following from the root directory:
+rake db:drop
+rake db:create
+rake db:migrate
+
+2. Clone the repository and start over.
