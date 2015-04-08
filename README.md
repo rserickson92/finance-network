@@ -20,6 +20,7 @@ And that should hopefully be it!
 #Running
 
 Note: Steps 2 and 3 should only be necessary once.
+
 1. Go to the root directory of the project
 2. Run "bundle install", this will install dependencies.
 3. Run "rake db:migrate" to prepare the database tables.
@@ -34,3 +35,16 @@ I store the JSON data sent to the API endpoints in Rails's default SQLite databa
 and an Event table. The fields
 are almost exactly the same. I did some type conversions for convenience (e.g. I store the floats
 as ints).
+
+# Uh-oh, I broke the app!
+Note: The only validation the app does at this time is enforcing unique agent names. It is not
+bulletproof.
+
+Here are some things you can do:
+
+1. Try emptying the database. You can do this by running the following from the root directory:
+rake db:drop
+rake db:create
+rake db:migrate
+
+2. Clone the repository and start over.
