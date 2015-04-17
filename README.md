@@ -1,9 +1,11 @@
 # finance-network
 
+This was a coding challenge for an interview at Aurora Technology.
+
 This application runs on Rails. I chose Rails simply because it is the framework I am most comfortable
 with.
 
-repo: github.com/rserickson92
+repo: github.com/rserickson92/finance-network
 
 # Installing Ruby on Rails
 
